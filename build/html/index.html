@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>广告种子获取API对接指引 &mdash; UPInteractive Document  documentation</title>
+  <title>同步自定义目标操作指引 &mdash; UPInteractive Document  documentation</title>
   
 
   
@@ -79,14 +79,12 @@
             
               <!-- Local TOC -->
               <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">广告种子获取API对接指引</a><ul>
-<li><a class="reference internal" href="#key-ip">1. Key 与 IP白名单</a><ul>
-<li><a class="reference internal" href="#key">获取Key</a></li>
-<li><a class="reference internal" href="#ip">IP白名单</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#access-token">2. 获取 access_token</a></li>
-<li><a class="reference internal" href="#id1">3. 获取广告种子数据</a></li>
+<li><a class="reference internal" href="#">同步自定义目标操作指引</a><ul>
+<li><a class="reference internal" href="#id2">1. 开启推送和设定目标地址</a></li>
+<li><a class="reference internal" href="#id3">2. 推送请求内容</a></li>
+<li><a class="reference internal" href="#id4">3. 返回内容</a></li>
+<li><a class="reference internal" href="#id5">4. 请求地址白名单</a></li>
+<li><a class="reference internal" href="#id6">5. 重要机制说明</a></li>
 </ul>
 </li>
 </ul>
@@ -134,7 +132,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>广告种子获取API对接指引</li>
+      <li>同步自定义目标操作指引</li>
     
     
 
@@ -146,212 +144,174 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="api">
-<h1>广告种子获取API对接指引<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
-<p>本文档是 UPLTV 提供的 广告种子用户数据（下称“广告种子”）
-获取API的操作文档。</p>
-<div class="section" id="key-ip">
-<h2>1. Key 与 IP白名单<a class="headerlink" href="#key-ip" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="key">
-<h3>获取Key<a class="headerlink" href="#key" title="Permalink to this headline">¶</a></h3>
-<p>在对接API之前，您需要先拿到专属于贵公司的
-Key，其中包含两个重要参数：Client ID 和 Secret。获取方式：</p>
+  <div class="section" id="id1">
+<h1>同步自定义目标操作指引<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>1. 开启推送和设定目标地址<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>在开始之前，请在 UPLTV
+后台将相关应用的推送状态打开，并提供目标地址等必要参数。</p>
 <ol class="arabic simple">
-<li>登陆 UPLTV 后台，在 “高级功能 - 用户级数据” 页面中，找到
-“获取广告种子” 功能模块；</li>
-<li>在 “API方式获取” 标签页中，点击 “将密钥发送到安全邮箱”；</li>
-<li>您的 Key 将会以邮件形式发送到您指定的安全邮箱中。</li>
+<li>登陆 UPLTV 后台，在“高级功能 -
+收益拆分”页面中，找到“广告收入ROI分析”功能模块；</li>
+<li>选择“自定义推送”标签页；</li>
+<li>找到需要开启推送的应用，点击编辑图标；</li>
+<li>将启用状态开关置为开启状态，并填入推送目标地址的完整 URL 后，如果是
+iOS 应用还需额外提供应用的 Apple ID，完成后点击勾号确认按钮进行保存；</li>
+<li>已启用同步的应用，应用操作栏中会显示“发送测试数据”按钮，请点击该按钮以校验同步设置是否正常。</li>
 </ol>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/seed-pic3.png"><img alt="picture 3" src="_images/seed-pic3.png" style="width: 574.0px; height: 252.0px;" /></a>
+<p><strong>重要</strong>：出于安全性考虑，我们强烈建议您使用 https 格式的 URL
+作为目标地址！</p>
 </div>
-</div>
-<div class="section" id="ip">
-<h3>IP白名单<a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h3>
-<p>您还需将使用的 IP 配置到白名单中，UPLTV 会屏蔽所有不在白名单中的 IP所发出的接口请求。配置方式：</p>
-<ol class="arabic simple">
-<li>登陆 UPLTV 后台，在 “高级功能 -用户级数据” 页面中，找到 “获取广告种子” 功能模块；</li>
-<li>在 “API方式获取”标签页中，可以看到 “IP白名单管理” 编辑框；</li>
-<li>点击编辑图标进行编辑，多条IP 使用换行分割，限最多10条IP。</li>
-</ol>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/seed-pic4.png"><img alt="picture 4" src="_images/seed-pic4.png" style="width: 574.0px; height: 252.0px;" /></a>
-</div>
-</div>
-</div>
-<div class="section" id="access-token">
-<h2>2. 获取 access_token<a class="headerlink" href="#access-token" title="Permalink to this headline">¶</a></h2>
-<p><strong>请求地址：</strong><a class="reference external" href="https://open-api.upltv.com/oauth/access_token">https://open-api.upltv.com/oauth/access_token</a></p>
-<p><strong>请求方式：</strong>POST</p>
-<p><strong>请求参数：</strong></p>
+<div class="section" id="id3">
+<h2>2. 推送请求内容<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p><strong>请求地址</strong>：您设定的推送目标地址</p>
+<p><strong>请求方式</strong>：POST</p>
+<p><strong>请求参数</strong>：</p>
+<p>推送的数据将是一个 json
+数组，数组中每个元素均为一条独立的数据记录。每条记录都将包含如下参数字段：</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="18%" />
-<col width="8%" />
 <col width="11%" />
-<col width="63%" />
+<col width="6%" />
+<col width="6%" />
+<col width="57%" />
+<col width="20%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">参数</th>
 <th class="head">类型</th>
 <th class="head">是否必填</th>
-<th class="head">描述说明</th>
+<th class="head">描述</th>
+<th class="head">示例</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>grant_type</td>
-<td>String</td>
+<tr class="row-even"><td>upltv_product_id</td>
+<td>string</td>
 <td>是</td>
-<td>客户端调用类型，固定为 <strong>client_credentials</strong></td>
+<td>UPLTV 系统中的产品编号，由7位数字组成的字符串</td>
+<td>1001786</td>
 </tr>
-<tr class="row-odd"><td>client_id</td>
-<td>String</td>
+<tr class="row-odd"><td>product_mark</td>
+<td>string</td>
 <td>是</td>
-<td>通过邮件方式获取的 Client ID</td>
+<td>产品标识信息，包括应用平台（android 或 ios）和应用标识(安卓应用为包名，iOS应用为Apple ID)，二者以英文冒号分割。</td>
+<td>android:com.testing.new</td>
 </tr>
-<tr class="row-even"><td>client_secret</td>
-<td>String</td>
+<tr class="row-even"><td>device_id</td>
+<td>string</td>
 <td>是</td>
-<td>通过邮件方式获取的 Secret</td>
+<td>设备标识信息，安卓设备为 GAID，iOS设备为 IDFA</td>
+<td>1E2DFA89-496A-47FD-9941-DF1FC4E6484A</td>
+</tr>
+<tr class="row-odd"><td>event_name</td>
+<td>string</td>
+<td>是</td>
+<td>产生收益的事件名称</td>
+<td>UPLTV_adrev</td>
+</tr>
+<tr class="row-even"><td>currency</td>
+<td>string</td>
+<td>是</td>
+<td>收益的币种类型</td>
+<td>usd</td>
+</tr>
+<tr class="row-odd"><td>revenue</td>
+<td>float</td>
+<td>是</td>
+<td>该用户当日的收益汇总金额</td>
+<td>17.19</td>
+</tr>
+<tr class="row-even"><td>event_time</td>
+<td>datetime</td>
+<td>是</td>
+<td>记录生成时间（UST），通常为收益产生时间次日零点。格式：yyyy-mm-dd hh:mm:ss</td>
+<td>2019-07-07 00:00:00</td>
 </tr>
 </tbody>
 </table>
-<p><strong>返回参数：</strong></p>
+<p>请求示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span>
+    <span class="s2">&quot;upltv_product_id&quot;</span><span class="p">:</span><span class="s2">&quot;1001786&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;product_mark&quot;</span><span class="p">:</span><span class="s2">&quot;android:com.testing.new&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;device_id&quot;</span><span class="p">:</span><span class="s2">&quot;38400000-8cf0-11bd-b23e-10b96e40000d&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;event_name&quot;</span><span class="p">:</span><span class="s2">&quot;UPLTV_adrev&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;revenue&quot;</span><span class="p">:</span> <span class="mf">0.88</span><span class="p">,</span>
+    <span class="s2">&quot;currency&quot;</span><span class="p">:</span> <span class="s2">&quot;usd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;event_time&quot;</span><span class="p">:</span><span class="s2">&quot;2019-07-17 00:00:00&quot;</span>
+<span class="p">},</span>
+<span class="p">{</span>
+    <span class="s2">&quot;upltv_product_id&quot;</span><span class="p">:</span><span class="s2">&quot;1001785&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;product_mark&quot;</span><span class="p">:</span><span class="s2">&quot;ios:1759002391&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;device_id&quot;</span><span class="p">:</span><span class="s2">&quot;1E2DFA89-496A-47FD-9941-DF1FC4E6484A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;event_name&quot;</span><span class="p">:</span><span class="s2">&quot;UPLTV_adrev&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;revenue&quot;</span><span class="p">:</span> <span class="mf">0.89</span><span class="p">,</span>
+    <span class="s2">&quot;currency&quot;</span><span class="p">:</span> <span class="s2">&quot;usd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;event_time&quot;</span><span class="p">:</span><span class="s2">&quot;2019-07-17 00:00:00&quot;</span>
+<span class="p">}]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>3. 返回内容<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>请在接收到推送请求后，请在返回信息中提供如下内容：</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="23%" />
+<col width="13%" />
 <col width="11%" />
-<col width="66%" />
+<col width="14%" />
+<col width="48%" />
+<col width="14%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">参数</th>
 <th class="head">类型</th>
+<th class="head">是否必填</th>
 <th class="head">描述</th>
+<th class="head">示例</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>expires_in</td>
-<td>int</td>
-<td>当前 Token 的有效时长，以“秒”为单位</td>
+<tr class="row-even"><td>code</td>
+<td>number</td>
+<td>是</td>
+<td>处理状态码，<strong>处理成功时请返回 200</strong></td>
+<td>200</td>
 </tr>
-<tr class="row-odd"><td>access_token</td>
-<td>String</td>
-<td>获取广告种子数据接口的 Token</td>
+<tr class="row-odd"><td>message</td>
+<td>string</td>
+<td>是</td>
+<td>描述信息，请求处理结果的简要说明</td>
+<td>处理成功</td>
 </tr>
 </tbody>
 </table>
-<p><strong>返回示例：</strong></p>
+<p>返回示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;expires_in&quot;</span><span class="p">:</span> <span class="mi">3600</span><span class="p">,</span>
-    <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxx&quot;</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span>
+    <span class="s2">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;操作成功&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id1">
-<h2>3. 获取广告种子数据<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p><strong>请求地址：</strong><a class="reference external" href="https://open-api.upltv.com/api/v.1.0.0/app/">https://open-api.upltv.com/api/v.1.0.0/app/</a><strong>&lt;upltv_pid&gt;</strong>/core/<strong>&lt;page&gt;</strong>/<strong>&lt;page_size&gt;</strong></p>
-<p><strong>请求方式：</strong>GET</p>
-<p><strong>header 信息：</strong>需设置 header 信息 “Authorization:Bearer <strong>&lt;access_token&gt;</strong>”</p>
-<p><strong>相关参数：</strong></p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="17%" />
-<col width="8%" />
-<col width="11%" />
-<col width="64%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">参数</th>
-<th class="head">类型</th>
-<th class="head">是否必须</th>
-<th class="head">描述说明</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>access_token</td>
-<td>String</td>
-<td>是</td>
-<td>接口 Token，获取方式见于前文</td>
-</tr>
-<tr class="row-odd"><td>upltv_id</td>
-<td><ul class="first last simple">
-<li></li>
-</ul>
-</td>
-<td>是</td>
-<td>应用在 UPLTV 后台的 App ID，可在应用列表中查阅</td>
-</tr>
-<tr class="row-even"><td>page</td>
-<td><ul class="first last simple">
-<li></li>
-</ul>
-</td>
-<td>是</td>
-<td>分页页数（返回数据为分页形式）</td>
-</tr>
-<tr class="row-odd"><td>page_size</td>
-<td><ul class="first last simple">
-<li></li>
-</ul>
-</td>
-<td>是</td>
-<td>每页数据条数</td>
-</tr>
-</tbody>
-</table>
-<p><strong>返回参数：</strong></p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="25%" />
-<col width="17%" />
-<col width="58%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">参数</th>
-<th class="head">类型</th>
-<th class="head">描述</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>country</td>
-<td>String</td>
-<td>用户所属国家的iso代码</td>
-</tr>
-<tr class="row-odd"><td>device</td>
-<td>String</td>
-<td>用户的设备id</td>
-</tr>
-<tr class="row-even"><td>page</td>
-<td>int</td>
-<td>当前页码</td>
-</tr>
-<tr class="row-odd"><td>pageCount</td>
-<td>int</td>
-<td>总页数</td>
-</tr>
-</tbody>
-</table>
-<p><strong>返回示例：</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;cn&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;us&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
-            <span class="p">}</span>
-        <span class="p">],</span>
-        <span class="s2">&quot;page&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">&quot;pageCount&quot;</span><span class="p">:</span> <span class="mi">1</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+<div class="section" id="id5">
+<h2>4. 请求地址白名单<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>如果您提供的目标地址有访问 IP 白名单限制，请将 UPLTV
+可能会用到的如下请求发送地址加入到您的 IP 白名单中： <strong>120.132.23.7</strong></p>
 </div>
+<div class="section" id="id6">
+<h2>5. 重要机制说明<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>UPLTV 会于 UTC
+时间每日19点开始推送前一日数据，根据实际任务处理队列，不同产品会在此时间点后向后顺延推迟。</li>
+<li>每天的数据会拆分成多个请求进行推送，每次请求最多包含20条数据记录。</li>
+<li>请求超时未返回（超时时间 15000ms），或返回 json 内容中 code
+不是200，均认为该次推送请求失败。</li>
+<li>针对失败的推送请求，UPLTV 会尝试重新推送，最多会进行3次重试。</li>
+<li>如需获取未推送成功的数据，暂行请通过您的商务代表联系 UPLTV 处理。</li>
+<li>由于存在重试机制，故此建议您处理推送数据时，以 upltv_product_id 和
+device_id 联合作为唯一标识进行本地数据更新操作，以免出现冗余数据。</li>
+</ol>
 </div>
 </div>
 
